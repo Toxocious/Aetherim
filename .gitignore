@@ -1,0 +1,15 @@
+# visual studio files
+.vs
+.vscode
+*.sln
+*.vsxproj
+*.vsxproj.user
+*.vsxproj.filters
+**/*.vcxproj
+**/*.vcxproj.user
+**/*.vcxproj.filters
+
+# compiled binaries
+./bin
+./build
+./dist
