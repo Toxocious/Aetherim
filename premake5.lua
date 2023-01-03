@@ -31,8 +31,8 @@ workspace "Aetherim"
 
     Declare_MSVC_Options()
 
-    targetdir("bin/" .. Output_Dir .. "/%{prj.name}")
-    objdir("bin/" .. Output_Dir .. "/%{prj.name}/obj")
+    targetdir("bin/" .. Output_Dir .. "/")
+    objdir("bin/" .. Output_Dir .. "/obj")
 
     files {
       "src/*.h",
@@ -41,6 +41,7 @@ workspace "Aetherim"
       "src/**/*.cpp",
       "src/*.hpp",
       "src/**/*.hpp",
+      "main.cpp",
     }
 
     flags {
