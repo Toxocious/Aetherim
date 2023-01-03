@@ -33,18 +33,13 @@ public:
   /**
    * Returns a field given a name.
    */
-  auto get_field( const char * name )
+  auto get_field( const char * name ) const -> void *
   {
     auto field = il2cpp::get_field( this, name );
     if ( !field )
       return nullptr;
 
-    auto offset = il2cpp::get_field_offset( field );
-    // auto type = il2cpp::get_field_type( field );
-
-    // auto field_type = il2cpp::get_type_type( type );
-
-    // return reinterpret_cast<field_type *>( this + offset );
+    return field;
   }
 
   /**
@@ -86,7 +81,7 @@ public:
   }
 
   /**
-   * Returns a static field by name.
+   * Given a name, returns a pointer to the static field.
    */
   auto get_static_field( const char * name )
   {
