@@ -1,12 +1,13 @@
 #include <iostream>
 
 #include "src/dumper.hpp"
+#include "./structs.h"
 
 auto startup()
 {
   if ( AllocConsole() )
   {
-    SetConsoleTitleA( "[Fleiya] Debug Console\n" );
+    SetConsoleTitleA( "[Aetherim] Debug Console\n" );
 
     FILE * output;
     freopen_s( &output, "CONOUT$", "w", stdout );
@@ -55,7 +56,15 @@ DWORD WINAPI Init( HMODULE module )
   const auto player_instance = player->get_static_field( "Instance" );
   if ( player_instance != nullptr )
   {
-    printf( "\t[Aetherim] PlayerHandler Instance (0x%zx)\n", player_instance );
+    printf( "\t[Aetherim] PlayerHandler Instance (0x%Ix)\n", reinterpret_cast<uintptr_t>( player_instance ) );
+
+    const auto player = reinterpret_cast<PlayerHandler *>( player_instance );
+    if ( player )
+    {
+      printf( "\t[Aetherim] PlayerHandler -> Current Steps: %i\n", player->fields.CurrentSteps );
+      // printf( "\t[Aetherim] PlayerHandler -> Steps Till Encounter: %i\n", player->WildCounter );
+      // printf( "\t[Aetherim] PlayerHandler -> Position (x,y): %f,%f\n", player->PosX, player->PosY );
+    }
   }
 
   Sleep( 60000 );

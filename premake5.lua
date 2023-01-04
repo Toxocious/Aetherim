@@ -41,6 +41,8 @@ workspace "Aetherim"
       "src/**/*.cpp",
       "src/*.hpp",
       "src/**/*.hpp",
+
+      "structs.h",
       "main.cpp",
     }
 
