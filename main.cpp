@@ -1,33 +1,16 @@
 #include <iostream>
 
 #include "src/dumper.hpp"
-#include "./structs.h"
-
-auto startup()
-{
-  if ( AllocConsole() )
-  {
-    SetConsoleTitleA( "[Aetherim] Debug Console\n" );
-
-    FILE * output;
-    freopen_s( &output, "CONOUT$", "w", stdout );
-
-    return output;
-  }
-}
-
-DWORD cleanup( HMODULE module, FILE * output )
-{
-  fclose( output );
-  FreeConsole();
-  FreeLibraryAndExitThread( module, 0 );
-
-  return 0;
-}
 
 DWORD WINAPI Init( HMODULE module )
 {
-  auto output { startup() };
+  FILE * output;
+
+  if ( AllocConsole() )
+  {
+    SetConsoleTitleA( "[Aetherim] Debug Console\n" );
+    freopen_s( &output, "CONOUT$", "w", stdout );
+  }
 
   printf( "[Aetherim] Initializing\n" );
   il2cpp::initialize();
@@ -52,23 +35,13 @@ DWORD WINAPI Init( HMODULE module )
     printf( "\t[Aetherim] %s (0x%zx)\n", name, player->get_field_offset( name ) );
   }
 
-  printf( "\n[Aetherim] Getting PlayerHandler Instance\n" );
-  const auto player_instance = player->get_static_field( "Instance" );
-  if ( player_instance != nullptr )
-  {
-    printf( "\t[Aetherim] PlayerHandler Instance (0x%Ix)\n", reinterpret_cast<uintptr_t>( player_instance ) );
-
-    const auto player = reinterpret_cast<PlayerHandler *>( player_instance );
-    if ( player )
-    {
-      printf( "\t[Aetherim] PlayerHandler -> Current Steps: %i\n", player->fields.CurrentSteps );
-      // printf( "\t[Aetherim] PlayerHandler -> Steps Till Encounter: %i\n", player->WildCounter );
-      // printf( "\t[Aetherim] PlayerHandler -> Position (x,y): %f,%f\n", player->PosX, player->PosY );
-    }
-  }
-
   Sleep( 60000 );
-  return cleanup( module, output );
+
+  fclose( output );
+  FreeConsole();
+  FreeLibraryAndExitThread( module, 0 );
+
+  return 0;
 }
 
 DWORD WINAPI DllMain( HINSTANCE module, DWORD reason, void * reserved )
