@@ -85,7 +85,7 @@ public:
    */
   auto get_static_field( const char * name )
   {
-    const auto field = il2cpp::get_field( this, "Instance" );
+    const auto field = il2cpp::get_field( this, name );
 
     void * val = NULL;
 
