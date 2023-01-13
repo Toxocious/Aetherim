@@ -52,11 +52,13 @@ namespace il2cpp
   using get_nested_types_t = Class *(APICALL *) ( const void * klass, void * );
   using get_type_class_t = Class *(APICALL *) ( const void * type );
   using get_type_name_t = const char *(APICALL *) ( const void * type );
+  using get_type_object_t = void *(APICALL *) ( const void * type );
   using get_type_type_t = int( APICALL * )( void * type );
 
   inline get_nested_types_t get_nested_types = nullptr;
   inline get_type_class_t get_type_class = nullptr;
   inline get_type_name_t get_type_name = nullptr;
+  inline get_type_object_t get_type_object = nullptr;
   inline get_type_type_t get_type_type = nullptr;
 
   // methods
@@ -184,6 +186,9 @@ namespace il2cpp
 
     get_method_return_type = reinterpret_cast<get_method_return_type_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_method_get_return_type" ) );
+
+    get_type_object = reinterpret_cast<get_type_object_t>(
+        GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_type_get_object" ) );
 
     get_type_name = reinterpret_cast<get_type_name_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_type_get_name" ) );
