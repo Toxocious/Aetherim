@@ -80,16 +80,20 @@ namespace il2cpp
   using get_field_count_t = size_t( APICALL * )( const void * klass );
   using get_fields_t = void *(APICALL *) ( const void * klass, void * iter );
   using get_field_name_t = const char *(APICALL *) ( const void * field );
+  using get_field_object_t = void *(APICALL *) ( const void * field, const void * obj );
   using get_field_type_t = void *(APICALL *) ( const void * field );
   using get_static_field_t = void *(APICALL *) ( const void * field, void * output );
+  using set_static_field_t = void *(APICALL *) ( const void * field, void * value );
 
   inline get_field_t get_field = nullptr;
   inline get_field_offset_t get_field_offset = nullptr;
   inline get_field_count_t get_field_count = nullptr;
   inline get_fields_t get_fields = nullptr;
   inline get_field_name_t get_field_name = nullptr;
+  inline get_field_object_t get_field_object = nullptr;
   inline get_field_type_t get_field_type = nullptr;
   inline get_static_field_t get_static_field = nullptr;
+  inline set_static_field_t set_static_field = nullptr;
 
   // strings
   using get_string_chars_t = wchar_t *(APICALL *) ( void * string_object );
@@ -160,11 +164,17 @@ namespace il2cpp
     get_field_name = reinterpret_cast<get_field_name_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_field_get_name" ) );
 
+    get_field_object = reinterpret_cast<get_field_object_t>(
+        GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_field_get_value_object" ) );
+
     get_field_type = reinterpret_cast<get_field_type_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_field_get_type" ) );
 
     get_static_field = reinterpret_cast<get_static_field_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_field_static_get_value" ) );
+
+    set_static_field = reinterpret_cast<set_static_field_t>(
+        GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_field_static_set_value" ) );
 
     get_method_param_count = reinterpret_cast<get_method_param_count_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_method_get_param_count" ) );

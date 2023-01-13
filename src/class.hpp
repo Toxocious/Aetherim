@@ -32,7 +32,6 @@ public:
 
   /**
    * Invoke a static method.
-   * A pointer to the object is not required.
    */
   auto invoke_method( void * method_ptr, void ** params = nullptr ) -> void *
   {
@@ -46,7 +45,7 @@ public:
 
   /**
    * Invoke a non-static mathod.
-   * A pointer to the object is required.
+   * You need to pass a valid pointer to an Il2CppObject.
    */
   auto invoke_method( void * method_ptr, void * obj, void ** params = nullptr ) -> void *
   {
