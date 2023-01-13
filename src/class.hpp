@@ -31,6 +31,34 @@ public:
   }
 
   /**
+   * Invoke a static method.
+   * A pointer to the object is not required.
+   */
+  auto invoke_method( void * method_ptr, void ** params = nullptr ) -> void *
+  {
+    if ( method_ptr == nullptr )
+      return;
+
+    void * excption = nullptr;
+
+    return il2cpp::method_call( method_ptr, nullptr, params, &excption );
+  }
+
+  /**
+   * Invoke a non-static mathod.
+   * A pointer to the object is required.
+   */
+  auto invoke_method( void * method_ptr, void * obj, void ** params = nullptr ) -> void *
+  {
+    if ( method_ptr == nullptr || obj == nullptr )
+      return;
+
+    void * excption = nullptr;
+
+    return il2cpp::method_call( method_ptr, obj, params, &excption );
+  }
+
+  /**
    * Returns a field given a name.
    */
   auto get_field( const char * name ) const -> void *
