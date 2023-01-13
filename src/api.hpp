@@ -60,12 +60,14 @@ namespace il2cpp
   inline get_type_type_t get_type_type = nullptr;
 
   // methods
+  using method_call_t = void *(APICALL *) ( void * method, void * obj, void ** params, void ** excption );
   using get_method_t = void *(APICALL *) ( const void * klass, const char * name, int params );
   using get_methods_t = void *(APICALL *) ( const void * klass, void * iter );
   using get_method_param_count_t = int( APICALL * )( void * method );
   using get_method_param_name_t = const char *(APICALL *) ( void * method, int index );
   using get_method_return_type_t = void *(APICALL *) ( void * method );
 
+  inline method_call_t method_call = nullptr;
   inline get_method_t get_method = nullptr;
   inline get_methods_t get_methods = nullptr;
   inline get_method_param_count_t get_method_param_count = nullptr;
@@ -130,6 +132,9 @@ namespace il2cpp
 
     get_class_name = reinterpret_cast<get_class_name_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_class_get_name" ) );
+
+    method_call = reinterpret_cast<method_call_t>(
+        GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_runtime_invoke" ) );
 
     get_methods = reinterpret_cast<get_methods_t>(
         GetProcAddress( GetModuleHandle( L"GameAssembly.dll" ), "il2cpp_class_get_methods" ) );
