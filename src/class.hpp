@@ -36,7 +36,7 @@ public:
   auto invoke_method( void * method_ptr, void ** params = nullptr ) -> void *
   {
     if ( method_ptr == nullptr )
-      return;
+      return nullptr;
 
     void * excption = nullptr;
 
@@ -50,7 +50,7 @@ public:
   auto invoke_method( void * method_ptr, void * obj, void ** params = nullptr ) -> void *
   {
     if ( method_ptr == nullptr || obj == nullptr )
-      return;
+      return nullptr;
 
     void * excption = nullptr;
 
