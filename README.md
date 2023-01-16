@@ -70,15 +70,15 @@ I do not guarantee that this will compile any other way.
 Initialize the wrapper by calling the dumper constructor early on in your code.
 
 ```cpp
-const auto Wrapper = std::make_unique<Dumper>();
+const auto Wrapper = std::make_unique<Wrapper>();
 ```
 
 You now have access to the wrapper and the methods that it provides to you.
 
 ### Getting An Image/DLL
-Getting an IL2CPP image will provide you access to any class that it holds, and helper methods to access things within the Image. These classes are easily found by dropping a dumped game's files into something like DnSpy.
+Getting an IL2CPP image will provide you access to all classes that it holds, and helper methods to access things within the Image. These images are easily found by dropping a dumped game's files into something like DnSpy.
 
-Get an image/.dll of the game like so:
+Get a pointer to an IL2CPP image like so:
 
 ```cpp
 const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );

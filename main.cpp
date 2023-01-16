@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "src/dumper.hpp"
+#include "src/wrapper.hpp"
 
 DWORD WINAPI Init( HMODULE module )
 {
@@ -17,7 +17,7 @@ DWORD WINAPI Init( HMODULE module )
   printf( "[Aetherim] Initialization Complete\n\n" );
 
   printf( "[Aetherim] Dumping Images\n" );
-  const auto Aetherim = std::make_unique<Dumper>();
+  const auto Aetherim = std::make_unique<Wrapper>();
   printf( "[Aetherim] Images Dumped\n\n" );
 
   printf( "[Aetherim] Getting Assembly-CSharp Image\n" );

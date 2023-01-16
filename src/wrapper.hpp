@@ -7,7 +7,7 @@
 
 #include "./image.hpp"
 
-class Dumper
+class Wrapper
 {
 public:
   using images_t = std::vector<Image *>;
@@ -19,7 +19,7 @@ public:
   /**
    * Dumps all images.
    */
-  Dumper()
+  Wrapper()
   {
     size_t count = 0U;
 
