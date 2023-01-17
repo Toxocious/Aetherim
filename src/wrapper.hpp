@@ -23,12 +23,12 @@ public:
   {
     size_t count = 0U;
 
-    const auto domain = il2cpp::get_domain();
-    const auto assemblies = il2cpp::get_assemblies( domain, &count );
+    const auto domain = Il2cpp::get_domain();
+    const auto assemblies = Il2cpp::get_assemblies( domain, &count );
 
     for ( size_t index = 0U; index < count; ++index )
     {
-      auto image = il2cpp::get_image( assemblies[index] );
+      auto image = Il2cpp::get_image( assemblies[index] );
       if ( image )
         m_images.emplace_back( static_cast<Image *>( image ) );
     }

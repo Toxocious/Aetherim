@@ -66,6 +66,28 @@ I do not guarantee that this will compile any other way.
 
 
 ## Usage
+Add the repository into your project (typically in a `/deps` folder or something).
+
+> Consider adding this repository as a git submodule, so that you can update your project easily when Aetherim updates.
+
+```sh
+git submodule add https://github.com/Toxocious/Aetherim
+```
+
+When Aetherim has updated, you can quickly pull the up-to-date code into your project and continue developing with Aetherim's updated functionality.
+
+Use the following command to pull the up-to-date code into your project.
+
+```sh
+git submodule update --remote Aetherim
+```
+
+If you would like to remove Aetherim from your project, run the following command and the filetree for Aetherim and its submodule entry in your .gitmodules file will be removed.
+
+```sh
+git rm <path-to-Aetherim>
+```
+
 ### Initialization
 Initialize the wrapper by calling the dumper constructor early on in your code.
 

@@ -23,7 +23,7 @@ public:
    */
   auto get_method( const char * name ) const -> void *
   {
-    auto method = il2cpp::get_method( this, name, -1 );
+    auto method = Il2cpp::get_method( this, name, -1 );
     if ( !method )
       return nullptr;
 
@@ -40,7 +40,7 @@ public:
 
     void * excption = nullptr;
 
-    return il2cpp::method_call( method_ptr, nullptr, params, &excption );
+    return Il2cpp::method_call( method_ptr, nullptr, params, &excption );
   }
 
   /**
@@ -54,7 +54,7 @@ public:
 
     void * excption = nullptr;
 
-    return il2cpp::method_call( method_ptr, obj, params, &excption );
+    return Il2cpp::method_call( method_ptr, obj, params, &excption );
   }
 
   /**
@@ -62,7 +62,7 @@ public:
    */
   auto get_field( const char * name ) const -> void *
   {
-    auto field = il2cpp::get_field( this, name );
+    auto field = Il2cpp::get_field( this, name );
     if ( !field )
       return nullptr;
 
@@ -78,7 +78,7 @@ public:
     if ( m_fields.size() )
       return m_fields;
 
-    const size_t count = il2cpp::get_field_count( this );
+    const size_t count = Il2cpp::get_field_count( this );
     if ( count )
       m_fields.resize( count );
 
@@ -87,7 +87,7 @@ public:
 
     size_t index = 0;
 
-    while ( field = il2cpp::get_fields( this, &iter ) )
+    while ( field = Il2cpp::get_fields( this, &iter ) )
     {
       if ( !field || field == NULL )
         continue;
@@ -103,8 +103,8 @@ public:
    */
   auto get_field_offset( const char * name ) const -> size_t
   {
-    const void * field = il2cpp::get_field( this, name );
-    return il2cpp::get_field_offset( field );
+    const void * field = Il2cpp::get_field( this, name );
+    return Il2cpp::get_field_offset( field );
   }
 
   /**
@@ -112,11 +112,11 @@ public:
    */
   auto get_static_field( const char * name )
   {
-    const auto field = il2cpp::get_field( this, name );
+    const auto field = Il2cpp::get_field( this, name );
 
     void * val = NULL;
 
-    il2cpp::get_static_field( field, &val );
+    Il2cpp::get_static_field( field, &val );
 
     return val;
   }
@@ -128,9 +128,9 @@ public:
   {
     void * iter = NULL;
 
-    while ( auto type = il2cpp::get_nested_types( this, &iter ) )
+    while ( auto type = Il2cpp::get_nested_types( this, &iter ) )
     {
-      const auto class_name = il2cpp::get_class_name( type );
+      const auto class_name = Il2cpp::get_class_name( type );
 
       if ( !strcmp( class_name, name ) )
         return type;
@@ -142,5 +142,5 @@ public:
   /**
    * Return the name of the current class.
    */
-  auto get_name() const -> const char * { return il2cpp::get_class_name( this ); }
+  auto get_name() const -> const char * { return Il2cpp::get_class_name( this ); }
 };

@@ -13,7 +13,7 @@ DWORD WINAPI Init( HMODULE module )
   }
 
   printf( "[Aetherim] Initializing\n" );
-  il2cpp::initialize();
+  Il2cpp::initialize();
   printf( "[Aetherim] Initialization Complete\n\n" );
 
   printf( "[Aetherim] Dumping Images\n" );
@@ -31,7 +31,7 @@ DWORD WINAPI Init( HMODULE module )
   printf( "[Aetherim] Getting PlayerHandler Fields\n" );
   for ( const auto field : static_cast<Class *>( player )->get_fields() )
   {
-    const auto name = il2cpp::get_field_name( field );
+    const auto name = Il2cpp::get_field_name( field );
     printf( "\t[Aetherim] %s (0x%zx)\n", name, player->get_field_offset( name ) );
   }
 

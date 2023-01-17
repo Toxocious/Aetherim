@@ -19,7 +19,7 @@
 class Class;
 class Image;
 
-namespace il2cpp
+namespace Il2cpp
 {
   inline bool initialized { false };
 
