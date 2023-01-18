@@ -16,8 +16,9 @@
 #define DEF_ADDR( name, il2cpp_export, handle ) \
   name = reinterpret_cast<name##_t>( GetProcAddress( handle, il2cpp_export ) );
 
-class Class;
 class Image;
+class Class;
+class Method;
 
 namespace Il2cpp
 {
@@ -27,7 +28,7 @@ namespace Il2cpp
   DEF_API( is_debugger_attached, bool, (void) );
 
   // internal calls
-  DEF_API( add_icall, void, ( const char * name, void * method_ptr ) );
+  DEF_API( add_icall, void, ( const char * name, const Method * method_ptr ) );
   DEF_API( resolve_icall, void, ( const char * name ) );
 
   // thread, domain, and assembly
@@ -74,14 +75,17 @@ namespace Il2cpp
   DEF_API( get_type_type, int, ( void * type ) );
 
   // methods
-  DEF_API( method_call, void *, ( void * method, void * obj, void ** params, void ** excption ) );
+  DEF_API( method_call, void *, ( const Method * method, void * obj, void ** params, void ** excption ) );
   DEF_API( get_method, void *, ( const void * klass, const char * name, int params ) );
   DEF_API( get_methods, void *, ( const void * klass, void * iter ) );
-  DEF_API( get_method_name, const char *, ( const void * method ) );
-  DEF_API( get_method_param_count, int, ( void * method ) );
-  DEF_API( get_method_param_name, const char *, ( void * method, uint32_t index ) );
-  DEF_API( get_method_param_type, const char *, ( void * method, int index ) );
-  DEF_API( get_method_return_type, void *, ( void * method ) );
+  DEF_API( get_method_name, const char *, ( const Method * method ) );
+  DEF_API( get_method_is_generic, bool, ( const Method * method ) );
+  DEF_API( get_method_is_inflated, bool, ( const Method * method ) );
+  DEF_API( get_method_is_instance, bool, ( const Method * method ) );
+  DEF_API( get_method_param_count, int, ( const Method * method ) );
+  DEF_API( get_method_param_name, const char *, ( const Method * method, uint32_t index ) );
+  DEF_API( get_method_param_type, const char *, ( const Method * method, int index ) );
+  DEF_API( get_method_return_type, void *, ( const Method * method ) );
 
   // fields
   DEF_API( get_fields, void *, ( const void * klass, void * iter ) );
@@ -163,6 +167,9 @@ namespace Il2cpp
     DEF_ADDR( get_method, "il2cpp_class_get_method_from_name", GameAssemblyHandle );
     DEF_ADDR( get_methods, "il2cpp_class_get_methods", GameAssemblyHandle );
     DEF_ADDR( get_method_name, "il2cpp_method_get_name", GameAssemblyHandle );
+    DEF_ADDR( get_method_is_generic, "il2cpp_method_is_generic", GameAssemblyHandle );
+    DEF_ADDR( get_method_is_inflated, "il2cpp_method_is_inflated", GameAssemblyHandle );
+    DEF_ADDR( get_method_is_instance, "il2cpp_method_is_instance", GameAssemblyHandle );
     DEF_ADDR( get_method_param_count, "il2cpp_method_get_param_count", GameAssemblyHandle );
     DEF_ADDR( get_method_param_name, "il2cpp_method_get_param_name", GameAssemblyHandle );
     DEF_ADDR( get_method_param_type, "il2cpp_get_param", GameAssemblyHandle );
