@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "./api.hpp"
+#include "./method.hpp"
 
 class Class
 {
@@ -21,40 +22,13 @@ public:
   /**
    * Returns a pointer to the specified method.
    */
-  auto get_method( const char * name ) const -> void *
+  auto get_method( const char * name ) const -> Method *
   {
     auto method = Il2cpp::get_method( this, name, -1 );
     if ( !method )
       return nullptr;
 
-    return method;
-  }
-
-  /**
-   * Invoke a static method.
-   */
-  auto invoke_method( void * method_ptr, void ** params = nullptr ) -> void *
-  {
-    if ( method_ptr == nullptr )
-      return nullptr;
-
-    void * excption = nullptr;
-
-    return Il2cpp::method_call( method_ptr, nullptr, params, &excption );
-  }
-
-  /**
-   * Invoke a non-static mathod.
-   * You need to pass a valid pointer to an Il2CppObject.
-   */
-  auto invoke_method( void * method_ptr, void * obj, void ** params = nullptr ) -> void *
-  {
-    if ( method_ptr == nullptr || obj == nullptr )
-      return nullptr;
-
-    void * excption = nullptr;
-
-    return Il2cpp::method_call( method_ptr, obj, params, &excption );
+    return reinterpret_cast<Method *>( method );
   }
 
   /**
@@ -110,7 +84,7 @@ public:
   /**
    * Given a name, returns a pointer to the static field.
    */
-  auto get_static_field( const char * name )
+  auto get_static_field( const char * name ) const -> void *
   {
     const auto field = Il2cpp::get_field( this, name );
 

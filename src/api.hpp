@@ -83,7 +83,7 @@ namespace Il2cpp
   DEF_API( get_method_is_inflated, bool, ( const Method * method ) );
   DEF_API( get_method_is_instance, bool, ( const Method * method ) );
   DEF_API( get_method_param_count, int, ( const Method * method ) );
-  DEF_API( get_method_param_name, const char *, ( const Method * method, uint32_t index ) );
+  DEF_API( get_method_param_name, const char *, ( const Method * method, int index ) );
   DEF_API( get_method_param_type, const char *, ( const Method * method, int index ) );
   DEF_API( get_method_return_type, void *, ( const Method * method ) );
 
