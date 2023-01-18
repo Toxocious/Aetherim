@@ -20,7 +20,7 @@ public:
    */
   auto get_class( const char * name, const char * namespaze = "" ) const -> Class *
   {
-    return il2cpp::get_class( this, namespaze, name );
+    return Il2cpp::get_class( this, namespaze, name );
   }
 
   /**
@@ -32,7 +32,7 @@ public:
     if ( m_classes.size() )
       return m_classes;
 
-    size_t count = il2cpp::get_class_count( this );
+    size_t count = Il2cpp::get_class_count( this );
     if ( count )
       m_classes.resize( count );
 
@@ -40,11 +40,11 @@ public:
 
     for ( size_t index = 0U; index < count; ++index )
     {
-      auto address = il2cpp::get_class_from_image( this, index );
+      auto address = Il2cpp::get_class_from_image( this, index );
       if ( !address )
         continue;
 
-      auto name = il2cpp::get_class_name( address );
+      auto name = Il2cpp::get_class_name( address );
       if ( !name )
         continue;
 
