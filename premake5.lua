@@ -3,19 +3,13 @@ workspace "Aetherim"
 
   configurations { "Debug", "Release" }
 
-  filter "configurations:Debug"
-    Output_Dir = "Debug"
-
-  filter "configurations:Release"
-    Output_Dir = "Release"
-
   CPP_Version = "c++17"
   MSVC_Version = "v143"
 
   function Declare_MSVC_Options()
     filter "system:windows"
     floatingpoint "Fast"
-    toolset(MSVC_Toolset)
+    toolset(MSVC_Version)
     cppdialect(CPP_Version)
 
     disablewarnings { "4996" }
@@ -30,9 +24,6 @@ workspace "Aetherim"
     targetextension ".dll"
 
     Declare_MSVC_Options()
-
-    targetdir("bin/" .. Output_Dir .. "/")
-    objdir("bin/" .. Output_Dir .. "/obj")
 
     files {
       "src/*.h",
@@ -52,11 +43,15 @@ workspace "Aetherim"
     }
 
     filter "configurations:Debug"
+      targetdir "bin/debug"
+      objdir "bin/debug/obj"
       flags { }
-      editandcontinue "Off"
       defines { "DEBUG" }
+      editandcontinue "Off"
 
     filter "configurations:Release"
+      targetdir "bin/release"
+      objdir "bin/release/obj"
       flags { "NoManifest" }
       defines { "RELEASE" }
       optimize "speed"
