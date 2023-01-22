@@ -18,7 +18,7 @@ public:
    */
   auto invoke_static( void ** params = nullptr ) const -> void *
   {
-    if ( this == nullptr )
+    if ( Il2cpp::method_call == nullptr || this == nullptr )
       return nullptr;
 
     void * excption = nullptr;
@@ -38,7 +38,7 @@ public:
    */
   auto invoke( void * obj, void ** params = nullptr ) -> const void *
   {
-    if ( this == nullptr )
+    if ( Il2cpp::method_call == nullptr || this == nullptr )
       return nullptr;
 
     void * excption = nullptr;
