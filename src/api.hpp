@@ -27,9 +27,11 @@ namespace Il2cpp
   // debugger
   DEF_API( is_debugger_attached, bool, (void) );
 
-  // internal calls
+  // internal calls and runtime
   DEF_API( add_icall, void, ( const char * name, const Method * method_ptr ) );
   DEF_API( resolve_icall, void, ( const char * name ) );
+  DEF_API( init_class, void, ( void * klass ) );
+  DEF_API( init_object, void, ( void * obj ) );
 
   // thread, domain, and assembly
   DEF_API( get_thread, void *, (void) );
@@ -43,7 +45,12 @@ namespace Il2cpp
   DEF_API( get_class_from_image, Class *, ( const void * image, size_t index ) );
 
   // objects
-  DEF_API( create_new_object, void *, ( void * domain, void * klass ) );
+  DEF_API( object_create, void *, ( void * domain, void * klass ) );
+  DEF_API( object_unbox, void *, ( void * obj ) );
+  DEF_API( object_box, void *, ( Class * klass, void * data ) );
+  DEF_API( object_get_size, uint32_t, ( void * obj ) );
+  DEF_API( object_get_class, Class *, ( void * obj ) );
+  DEF_API( object_get_virtual_method, Method *, ( void * obj, Method * method ) );
 
   // arrays
   DEF_API( get_array_element_size, int, ( const void * array_class ) );
@@ -115,9 +122,11 @@ namespace Il2cpp
     // debugger
     DEF_ADDR( is_debugger_attached, "il2cpp_is_debugger_attached", GameAssemblyHandle );
 
-    // internal calls
+    // internal calls and runtime
     DEF_ADDR( add_icall, "il2cpp_add_internal_call", GameAssemblyHandle );
     DEF_ADDR( resolve_icall, "il2cpp_resolve_icall", GameAssemblyHandle );
+    DEF_ADDR( init_class, "il2cpp_runtime_class_init", GameAssemblyHandle );
+    DEF_ADDR( init_object, "il2cpp_runtime_object_init", GameAssemblyHandle );
 
     // thread, domains, and assemblies
     DEF_ADDR( get_thread, "il2cpp_thread_attach", GameAssemblyHandle );
@@ -131,7 +140,12 @@ namespace Il2cpp
     DEF_ADDR( get_class_count, "il2cpp_image_get_class_count", GameAssemblyHandle );
 
     // objects
-    DEF_ADDR( create_new_object, "il2cpp_object_new", GameAssemblyHandle );
+    DEF_ADDR( object_create, "il2cpp_object_new", GameAssemblyHandle );
+    DEF_ADDR( object_box, "il2cpp_object_box", GameAssemblyHandle );
+    DEF_ADDR( object_unbox, "il2cpp_object_unbox", GameAssemblyHandle );
+    DEF_ADDR( object_get_size, "il2cpp_object_get_size", GameAssemblyHandle );
+    DEF_ADDR( object_get_class, "il2cpp_object_get_class", GameAssemblyHandle );
+    DEF_ADDR( object_get_virtual_method, "il2cpp_object_get_virtual_method", GameAssemblyHandle );
 
     // arrays
     DEF_ADDR( get_array_element_size, "il2cpp_array_element_size", GameAssemblyHandle );
