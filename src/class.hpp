@@ -8,6 +8,7 @@
 
 #include "./api.hpp"
 #include "./method.hpp"
+#include "./field.hpp"
 
 class Class
 {
@@ -24,6 +25,9 @@ public:
    */
   auto get_method( const char * name ) const -> Method *
   {
+    if ( Il2cpp::get_method == nullptr )
+      return nullptr;
+
     auto method = Il2cpp::get_method( this, name, -1 );
     if ( !method )
       return nullptr;
@@ -34,13 +38,16 @@ public:
   /**
    * Returns a field given a name.
    */
-  auto get_field( const char * name ) const -> void *
+  auto get_field( const char * name ) const -> Field *
   {
+    if ( Il2cpp::get_field == nullptr )
+      return nullptr;
+
     auto field = Il2cpp::get_field( this, name );
     if ( !field )
       return nullptr;
 
-    return field;
+    return reinterpret_cast<Field *>( field );
   }
 
   /**
@@ -50,6 +57,9 @@ public:
   {
     fields_t m_fields {};
     if ( m_fields.size() )
+      return m_fields;
+
+    if ( Il2cpp::get_field_count == nullptr || Il2cpp::get_fields == nullptr )
       return m_fields;
 
     const size_t count = Il2cpp::get_field_count( this );
@@ -73,33 +83,13 @@ public:
   }
 
   /**
-   * Returns the offset of a field relative to the class.
-   */
-  auto get_field_offset( const char * name ) const -> size_t
-  {
-    const void * field = Il2cpp::get_field( this, name );
-    return Il2cpp::get_field_offset( field );
-  }
-
-  /**
-   * Given a name, returns a pointer to the static field.
-   */
-  auto get_static_field( const char * name ) const -> void *
-  {
-    const auto field = Il2cpp::get_field( this, name );
-
-    void * val = NULL;
-
-    Il2cpp::get_static_field( field, &val );
-
-    return val;
-  }
-
-  /**
    * Given a name, returns a class that's nested inside of the current class.
    */
   auto get_nested_class( const char * name ) const -> Class *
   {
+    if ( Il2cpp::get_nested_types == nullptr || Il2cpp::get_class_name == nullptr )
+      return nullptr;
+
     void * iter = NULL;
 
     while ( auto type = Il2cpp::get_nested_types( this, &iter ) )
