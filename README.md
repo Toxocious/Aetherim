@@ -1,7 +1,9 @@
 <div align="center">
   <h1 align="center">Aetherim</h1>
 
-  **Aetherim** is the source-code of an internal, injectable DLL that is used to access Unity's IL2CPP methods during run-time. I created this in order to learn more about C++ as well as Unity and how its IL2CPP run-time works.
+  **Aetherim** is the source-code of an internal, injectable DLL that is used to access Unity's IL2CPP methods during run-time. Aetherim should work in both 64-bit and 32-bit programs.
+
+  I created this in order to learn more about C++ as well as Unity and how its IL2CPP run-time works.
 
   <img src="https://img.shields.io/github/issues/Toxocious/Aetherim?style=for-the-badge&logo=appveyor" />
   <img src="https://img.shields.io/github/forks/Toxocious/Aetherim?style=for-the-badge&logo=appveyor" />
@@ -69,7 +71,7 @@ I do not guarantee that this will compile any other way.
 
 
 ## Usage In Existing Project
-Add the repository into your project (typically in a `/deps` folder or something).
+Add the repository into your project (typically in a `/submodules` folder or something).
 
 > Consider adding this repository as a git submodule, so that you can update your project easily when Aetherim updates.
 
@@ -92,6 +94,8 @@ git rm <path-to-Aetherim>
 ```
 
 ### Initialization
+Be sure to ``#include`` the ``Aetherim/src/wrapper.hpp`` file to your main entrypoint file so that you can access and initialize the IL2CPP wrapper.
+
 Initialize the wrapper by calling the dumper constructor early on in your code.
 
 ```cpp
@@ -198,14 +202,12 @@ if ( get_player_position != nullptr )
   const auto position =
     reinterpret_cast<Vector3 *>(
       get_player_position->invoke(
-        get_player_position, // method pointer
-        instance,            // instance/object pointer
-        params               // either a void * of params or nullptr
+        instance, // instance/object pointer
+        params    // either a void * of params or nullptr
       )
     );
 }
 ```
-
 
 
 
