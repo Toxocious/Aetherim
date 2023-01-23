@@ -115,7 +115,7 @@ public:
    */
   auto get_name() const -> const char *
   {
-    if ( Il2cpp::get_class_name == nullptr )
+    if ( Il2cpp::get_method_name == nullptr )
       return "Method->get_name() is nullptr";
 
     return Il2cpp::get_method_name( this );
