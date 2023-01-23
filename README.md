@@ -25,12 +25,11 @@
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
-  - [Screenshot](#screenshot)
   - [Tech Stack](#tech-stack)
   - [Dependencies](#dependencies)
 - [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-- [Usage](#usage)
+  - [Compiling As A DLL](#compiling-as-a-dll)
+- [Usage In Existing Project](#usage-in-existing-project)
   - [Initialization](#initialization)
   - [Getting An Image/DLL](#getting-an-imagedll)
   - [Getting A Class](#getting-a-class)
@@ -46,9 +45,6 @@
 
 
 ## About The Project
-### Screenshot
-[insert screenshot of it here or something]
-
 ### Tech Stack
 - C++
 - Premake
@@ -64,7 +60,7 @@ I developed this on Windows and used Premake5 to generate VS2022 solution files 
 
 I do not guarantee that this will compile any other way.
 
-### Prerequisites
+### Compiling As A DLL
 1. Install Premake
 2. Clone this repository
 3. Open the project directory in your terminal
@@ -72,8 +68,7 @@ I do not guarantee that this will compile any other way.
 5. Open the project file in the appropriate software and compile the .dll
 
 
-
-## Usage
+## Usage In Existing Project
 Add the repository into your project (typically in a `/deps` folder or something).
 
 > Consider adding this repository as a git submodule, so that you can update your project easily when Aetherim updates.
@@ -122,7 +117,8 @@ After getting an IL2CPP image, you are granted access to any of its classes. You
 In this example, we'll get the PlayerHandler class.
 
 ```cpp
-const auto PlayerHandler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
 ```
 
 If found, a pointer is returned, otherwise `nullptr` is returned.
@@ -133,10 +129,21 @@ From here, PlayerHandler can provide you with various helper methods that allow 
 Static fields are great. They often provide a pointer to an instance of the class. We can easily get the pointer to a class's static field like so:
 
 ```cpp
-const auto player_instance = PlayerHandler->get_static_field( "Instance" );
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto get_player_instance = player_handler->get_field( "Instance" );
+const auto player_instance = get_player_instance->get_static_value();
 ```
 
 If found, a pointer is returned, otherwise `nullptr` is returned.
+
+These methods may me chained if you don't need to use the initial class or field class for anything, like so:
+```cpp
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_instance = Asm_CSharp->get_class( "PlayerHandler" )->get_field( "Instance" )->get_static_value();
+```
+
+
 
 ### Getting A Method Pointer
 Methods are great, and allow us to do all sorts of things, from hooking based on the returned address, or even invoking the method with whatever parameters we want.
@@ -144,7 +151,9 @@ Methods are great, and allow us to do all sorts of things, from hooking based on
 We can get the pointer of a method like so:
 
 ```cpp
-const auto player_position = PlayerHandler->get_method( "get_position" );
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto player_position = player_handler->get_method( "get_position" );
 ```
 
 If found, a pointer is returned, otherwise `nullptr` is returned.
@@ -155,19 +164,19 @@ Invoking a static method is easy. You only need a valid method pointer &mdash; n
 You can invoke a static method like so:
 
 ```cpp
-const auto player_position = PlayerHandler->get_method( "get_position" );
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto player_instance = player_handler->get_method( "get_instance" );
 
-if ( player_position != nullptr )
+if ( player_instance != nullptr )
 {
   void * params = nullptr;
-  const auto newCoords =
-    reinterpret_cast<Vector3 *>(
-      instance->invoke_method(
-        player_position, // method pointer
-        params // either a void * of params or nullptr
-      )
+
+  const auto new_instance =
+    reinterpret_cast<void *>(
+      player_instance->invoke_static( params )
     );
-}
+};
 ```
 
 ### Invoking A Non-Static Method
@@ -176,17 +185,22 @@ Invoking a non-static method is easy, but can be tricky if you find yourself una
 You can invoke a non-static method like so:
 
 ```cpp
-const auto player_instance = PlayerHandler->get_static_field( "Instance" );
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto get_player_position = player_handler->get_method( "get_position" );
 
-if ( player_instance != nullptr )
+if ( get_player_position != nullptr )
 {
+  const auto instance = player_handler->get_field( "Instance" )->get_static_value();
+
   void * params = nullptr;
-  const auto newCoords =
+
+  const auto position =
     reinterpret_cast<Vector3 *>(
-      PlayerHandler->invoke_method(
-        player_position, // method pointer
-        instance, // instance/object pointer
-        params // either a void * of params or nullptr
+      get_player_position->invoke(
+        get_player_position, // method pointer
+        instance,            // instance/object pointer
+        params               // either a void * of params or nullptr
       )
     );
 }

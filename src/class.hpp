@@ -106,5 +106,11 @@ public:
   /**
    * Return the name of the current class.
    */
-  auto get_name() const -> const char * { return Il2cpp::get_class_name( this ); }
+  auto get_name() const -> const char *
+  {
+    if ( Il2cpp::get_class_name == nullptr )
+      return "Class->get_name() is nullptr";
+
+    return Il2cpp::get_class_name( this );
+  }
 };

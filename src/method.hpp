@@ -113,5 +113,11 @@ public:
   /**
    * @brief Get the method name.
    */
-  auto get_name() const -> const char * { return Il2cpp::get_method_name( this ); }
+  auto get_name() const -> const char *
+  {
+    if ( Il2cpp::get_class_name == nullptr )
+      return "Method->get_name() is nullptr";
+
+    return Il2cpp::get_method_name( this );
+  }
 };
