@@ -35,6 +35,7 @@
   - [Initialization](#initialization)
   - [Getting An Image/DLL](#getting-an-imagedll)
   - [Getting A Class](#getting-a-class)
+  - [Getting All Fields Of A Class](#getting-all-fields-of-a-class)
   - [Getting A Static Field](#getting-a-static-field)
   - [Getting A Method Pointer](#getting-a-method-pointer)
   - [Invoking A Static Method](#invoking-a-static-method)
@@ -128,6 +129,22 @@ const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
 If found, a pointer is returned, otherwise `nullptr` is returned.
 
 From here, PlayerHandler can provide you with various helper methods that allow you to get field and method pointers for fields and methods of the PlayerHandler class, as well as a helper method to invoke methods of the class.
+
+### Getting All Fields Of A Class
+Aetherim provides an easy way to get every field that a class has.
+
+In the example below, we get all fields of the PlayerHandler class, and print out each field's name and offset.
+
+```cpp
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto player = image->get_class( "PlayerHandler" );
+
+for ( const auto field : player->get_fields() )
+{
+  printf( "\t[Aetherim] PlayerHandler -> %s (0x%zx)\n", field->get_name(), field->get_offset() );
+}
+```
 
 ### Getting A Static Field
 Static fields are great. They often provide a pointer to an instance of the class. We can easily get the pointer to a class's static field like so:
