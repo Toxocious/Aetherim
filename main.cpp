@@ -28,12 +28,11 @@ DWORD WINAPI Init( HMODULE module )
   const auto player = image->get_class( "PlayerHandler" );
   printf( "\t[Aetherim] PlayerHandler -> %s (0x%Ix)\n\n", player->get_name(), reinterpret_cast<uintptr_t>( player ) );
 
-  for ( const auto field : static_cast<Class *>( player )->get_fields() )
+  for ( const auto field : player->get_fields() )
   {
-    const auto name = Il2cpp::get_field_name( field );
-
-    printf( "\t[Aetherim] %s (0x%zx)\n", name, player->get_field(name)->get_offset() );
+    printf( "\t[Aetherim] PlayerHandler -> %s (0x%zx)\n", field->get_name(), field->get_offset() );
   }
+
 
   Sleep( 60000 );
 

@@ -48,14 +48,10 @@ public:
    */
   auto get_offset() const -> size_t
   {
-    if ( Il2cpp::get_field == nullptr )
+    if ( Il2cpp::get_field_offset == nullptr )
       return 0x0;
 
-    const void * field = Il2cpp::get_field( this, get_name() );
-    if ( field == nullptr )
-      return 0x0;
-
-    return Il2cpp::get_field_offset( field );
+    return Il2cpp::get_field_offset( this );
   }
 
   /**
