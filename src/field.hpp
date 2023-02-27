@@ -14,20 +14,16 @@ public:
   Field() = default;
 
   /**
-   * Returns the value of a static field.
+   * Return a static field given a name.
    */
-  auto get_static_value() const -> void *
+  auto get_as_static() const -> void *
   {
     if ( Il2cpp::get_static_field == nullptr )
       return nullptr;
 
-    const auto field = Il2cpp::get_field( this, get_name() );
-    if ( !field )
-      return nullptr;
-
     void * val = NULL;
 
-    Il2cpp::get_static_field( field, &val );
+    Il2cpp::get_static_field( this, &val );
 
     return val;
   }
