@@ -33,6 +33,9 @@ DWORD WINAPI Init( HMODULE module )
     printf( "\t[Aetherim] PlayerHandler -> %s (0x%zx)\n", field->get_name(), field->get_offset() );
   }
 
+  const auto player_instance = player->get_field( "Instance" )->get_as_static();
+  if ( player_instance != nullptr )
+    printf( "\t[Aetherim] PlayerHandler -> Static Instance (0x%zx)\n", reinterpret_cast<uintptr_t>( player_instance ) );
 
   Sleep( 60000 );
 

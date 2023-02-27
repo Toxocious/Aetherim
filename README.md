@@ -152,8 +152,7 @@ Static fields are great. They often provide a pointer to an instance of the clas
 ```cpp
 const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
 const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
-const auto get_player_instance = player_handler->get_field( "Instance" );
-const auto player_instance = get_player_instance->get_static_value();
+const auto get_player_instance = player_handler->get_field( "Instance" )->get_as_static();
 ```
 
 If found, a pointer is returned, otherwise `nullptr` is returned.
@@ -161,7 +160,7 @@ If found, a pointer is returned, otherwise `nullptr` is returned.
 These methods may me chained if you don't need to use the initial class or field class for anything, like so:
 ```cpp
 const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
-const auto player_instance = Asm_CSharp->get_class( "PlayerHandler" )->get_field( "Instance" )->get_static_value();
+const auto player_instance = Asm_CSharp->get_class( "PlayerHandler" )->get_field( "Instance" )->get_as_static();
 ```
 
 
