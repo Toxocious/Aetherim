@@ -19,6 +19,7 @@
 class Image;
 class Class;
 class Method;
+class Type;
 
 namespace Il2cpp
 {
@@ -76,10 +77,13 @@ namespace Il2cpp
 
   // types
   DEF_API( get_nested_types, Class *, (const void * klass, void *) );
+  DEF_API( get_type_attributes, uint32_t, ( const void * type ) );
   DEF_API( get_type_class, Class *, ( const void * type ) );
   DEF_API( get_type_name, const char *, ( const void * type ) );
   DEF_API( get_type_object, void *, ( const void * type ) );
   DEF_API( get_type_type, int, ( void * type ) );
+  DEF_API( get_type_equals, bool, ( Type * type_1, Type * type_2 ) );
+  DEF_API( get_type_is_byref, bool, ( Type * type ) );
 
   // methods
   DEF_API( method_call, void *, ( const Method * method, void * obj, void ** params, void ** excption ) );
@@ -171,10 +175,13 @@ namespace Il2cpp
 
     // types
     DEF_ADDR( get_nested_types, "il2cpp_class_get_nested_types", GameAssemblyHandle );
+    DEF_ADDR( get_type_attributes, "il2cpp_type_get_attrs", GameAssemblyHandle );
     DEF_ADDR( get_type_class, "il2cpp_type_get_class_or_element_class", GameAssemblyHandle );
     DEF_ADDR( get_type_name, "il2cpp_type_get_name", GameAssemblyHandle );
     DEF_ADDR( get_type_object, "il2cpp_type_get_object", GameAssemblyHandle );
     DEF_ADDR( get_type_type, "il2cpp_type_get_type", GameAssemblyHandle );
+    DEF_ADDR( get_type_equals, "il2cpp_type_equals", GameAssemblyHandle );
+    DEF_ADDR( get_type_is_byref, "il2cpp_type_is_byref", GameAssemblyHandle );
 
     // methods
     DEF_ADDR( method_call, "il2cpp_runtime_invoke", GameAssemblyHandle );

@@ -18,7 +18,7 @@ private:
 public:
   Class() = default;
 
-  using fields_t = std::vector<void *>;
+  using fields_t = std::vector<Field *>;
 
   /**
    * Returns a pointer to the specified method.
@@ -76,7 +76,7 @@ public:
       if ( !field || field == NULL )
         continue;
 
-      m_fields[index++] = field;
+      m_fields[index++] = reinterpret_cast<Field *>( field );
     }
 
     return m_fields;
