@@ -40,6 +40,7 @@
   - [Getting A Method Pointer](#getting-a-method-pointer)
   - [Invoking A Static Method](#invoking-a-static-method)
   - [Invoking A Non-Static Method](#invoking-a-non-static-method)
+  - [Check If A Debugger Is Attached To The Thread](#check-if-a-debugger-is-attached-to-the-thread)
 - [Contributing](#contributing)
   - [General Stance](#general-stance)
   - [Code Standards](#code-standards)
@@ -104,6 +105,10 @@ const auto Wrapper = std::make_unique<Wrapper>();
 ```
 
 You now have access to the wrapper and the methods that it provides to you.
+
+> The wrapper, upon initialization, automatically gets the IL2CPP domain and attaches it to the thread.
+>
+> This is necessary in order to prevent some access violation crashes.
 
 ### Getting An Image/DLL
 Getting an IL2CPP image will provide you access to all classes that it holds, and helper methods to access things within the Image. These images are easily found by dropping a dumped game's files into something like DnSpy.
@@ -223,6 +228,14 @@ if ( get_player_position != nullptr )
       )
     );
 }
+```
+
+### Check If A Debugger Is Attached To The Thread
+Very basic. Returns a boolean indicating if a debugger is attached to the thread.
+
+```cpp
+const auto Wrapper = std::make_unique<Wrapper>();
+const is_debugger_active = Wrapper->is_debugger_attached();
 ```
 
 
