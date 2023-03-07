@@ -54,4 +54,9 @@ public:
    * Returns all images.
    */
   auto get_images() const -> images_t { return m_images; }
+
+  /**
+   * Checks if there's an active debugger attached to the thread.
+   */
+  auto is_debugger_attached() const -> bool { return Il2cpp::is_debugger_attached(); }
 };
