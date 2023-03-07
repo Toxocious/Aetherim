@@ -35,7 +35,7 @@ namespace Il2cpp
   DEF_API( init_object, void, ( void * obj ) );
 
   // thread, domain, and assembly
-  DEF_API( get_thread, void *, (void) );
+  DEF_API( thread_attach, void *, ( void * domain ) );
   DEF_API( get_domain, void *, (void) );
   DEF_API( get_assemblies, void **, ( const void * domain, size_t * count ) );
 
@@ -133,7 +133,7 @@ namespace Il2cpp
     DEF_ADDR( init_object, "il2cpp_runtime_object_init", GameAssemblyHandle );
 
     // thread, domains, and assemblies
-    DEF_ADDR( get_thread, "il2cpp_thread_attach", GameAssemblyHandle );
+    DEF_ADDR( thread_attach, "il2cpp_thread_attach", GameAssemblyHandle );
     DEF_ADDR( get_domain, "il2cpp_domain_get", GameAssemblyHandle );
     DEF_ADDR( get_assemblies, "il2cpp_domain_get_assemblies", GameAssemblyHandle );
 
