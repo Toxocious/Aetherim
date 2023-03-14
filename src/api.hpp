@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <Windows.h>
+#include "./table_defs.h"
 
 #ifdef _WIN64
 #  define APICALL __fastcall
@@ -108,6 +109,7 @@ namespace Il2cpp
   DEF_API( get_field_type, void *, ( const void * field ) );
   DEF_API( get_static_field, void *, ( const void * field, void * output ) );
   DEF_API( set_static_field, void *, ( const void * field, void * value ) );
+  DEF_API( get_field_flags, int, ( const void * field ) );
 
   // strings
   DEF_API( get_string_chars, wchar_t *, ( void * string_obj ) );
@@ -206,6 +208,7 @@ namespace Il2cpp
     DEF_ADDR( get_field_type, "il2cpp_field_get_type", GameAssemblyHandle );
     DEF_ADDR( get_static_field, "il2cpp_field_static_get_value", GameAssemblyHandle );
     DEF_ADDR( set_static_field, "il2cpp_field_static_set_value", GameAssemblyHandle );
+    DEF_ADDR( get_field_flags, "il2cpp_field_get_flags", GameAssemblyHandle );
 
     // strings
     DEF_ADDR( get_string_chars, "il2cpp_string_chars", GameAssemblyHandle );
