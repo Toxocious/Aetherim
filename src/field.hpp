@@ -73,6 +73,56 @@ public:
   }
 
   /**
+   * Returns the attribute of the field.
+   * Ie. public FIELD, const private FIELD, static FIELD, etc
+   */
+  auto get_attribute() const -> const char *
+  {
+    if ( Il2cpp::get_field_flags == nullptr )
+      return nullptr;
+
+    char attr[100];
+
+    auto attrs = Il2cpp::get_field_flags( this );
+
+    auto access = attrs & FIELD_ATTRIBUTE_FIELD_ACCESS_MASK;
+    switch ( access )
+    {
+      case FIELD_ATTRIBUTE_PRIVATE:
+        strcpy( attr, "private " );
+        break;
+      case FIELD_ATTRIBUTE_PUBLIC:
+        strcpy( attr, "public " );
+        break;
+      case FIELD_ATTRIBUTE_FAMILY:
+        strcpy( attr, "protected " );
+        break;
+      case FIELD_ATTRIBUTE_ASSEMBLY:
+      case FIELD_ATTRIBUTE_FAM_AND_ASSEM:
+        strcpy( attr, "internal " );
+        break;
+      case FIELD_ATTRIBUTE_FAM_OR_ASSEM:
+        strcpy( attr, "protected internal " );
+        break;
+    }
+
+    if ( attrs & FIELD_ATTRIBUTE_LITERAL )
+    {
+      strcpy( attr, "const " );
+    }
+    else if ( attrs & FIELD_ATTRIBUTE_STATIC )
+    {
+      strcpy( attr, "static " );
+    }
+    else if ( attrs & FIELD_ATTRIBUTE_INIT_ONLY )
+    {
+      strcpy( attr, "readonly " );
+    }
+
+    return attr;
+  }
+
+  /**
    * @brief Get the field name.
    */
   auto get_name() const -> const char *

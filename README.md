@@ -37,6 +37,7 @@
   - [Getting A Class](#getting-a-class)
   - [Getting All Fields Of A Class](#getting-all-fields-of-a-class)
   - [Getting A Static Field](#getting-a-static-field)
+  - [Getting A Field's Attribute](#getting-a-fields-attribute)
   - [Getting A Method Pointer](#getting-a-method-pointer)
   - [Invoking A Static Method](#invoking-a-static-method)
   - [Invoking A Non-Static Method](#invoking-a-non-static-method)
@@ -138,7 +139,7 @@ From here, PlayerHandler can provide you with various helper methods that allow 
 ### Getting All Fields Of A Class
 Aetherim provides an easy way to get every field that a class has.
 
-In the example below, we get all fields of the PlayerHandler class, and print out each field's name and offset.
+In the example below, we get all fields of the PlayerHandler class, and print out each field's attribute, name, and offset.
 
 ```cpp
 const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
@@ -147,7 +148,12 @@ const auto player = image->get_class( "PlayerHandler" );
 
 for ( const auto field : player->get_fields() )
 {
-  printf( "\t[Aetherim] PlayerHandler -> %s (0x%zx)\n", field->get_name(), field->get_offset() );
+  const auto field_attribute = field->get_attribute();
+
+  if ( field_attribute != nullptr )
+    printf( "\t[Aetherim] PlayerHandler -> %s %s (0x%zx)\n", field_attribute, field->get_name(), field->get_offset() );
+  else
+    printf( "\t[Aetherim] PlayerHandler -> %s (0x%zx)\n", field->get_name(), field->get_offset() );
 }
 ```
 
@@ -166,6 +172,19 @@ These methods may me chained if you don't need to use the initial class or field
 ```cpp
 const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
 const auto player_instance = Asm_CSharp->get_class( "PlayerHandler" )->get_field( "Instance" )->get_as_static();
+```
+
+### Getting A Field's Attribute
+Getting a field's attribute tells you a lot about the field itself and how you can get or use it later.
+
+This has multiple purposes, but the first two that come to mind is using it for SDK generation (to be implemented later on) or to get a field based on its attribute.
+
+**What does this mean?** The latter will eventually allow Aetherim to fetch a given field through ``class->get_field()`` instead of through both ``class->get_field()`` and ``class->get_field()->as_static()``, since static fields lie in a different area in memory than non-static fields.
+
+```cpp
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto get_player_instance_attribute = player_handler->get_field( "Instance" )->get_attribute();
 ```
 
 
@@ -235,7 +254,7 @@ Very basic. Returns a boolean indicating if a debugger is attached to the thread
 
 ```cpp
 const auto Wrapper = std::make_unique<Wrapper>();
-const is_debugger_active = Wrapper->is_debugger_attached();
+const auto is_debugger_active = Wrapper->is_debugger_attached();
 ```
 
 
