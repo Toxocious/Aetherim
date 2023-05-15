@@ -23,12 +23,12 @@ public:
   /**
    * Returns a pointer to the specified method.
    */
-  auto get_method( const char * name ) const -> Method *
+  auto get_method( const char * name, int argc = 0 ) const -> Method *
   {
     if ( Il2cpp::get_method == nullptr )
       return nullptr;
 
-    auto method = Il2cpp::get_method( this, name, -1 );
+    auto method = Il2cpp::get_method( this, name, argc );
     if ( !method )
       return nullptr;
 
