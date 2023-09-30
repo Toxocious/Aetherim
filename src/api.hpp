@@ -1,21 +1,26 @@
 #pragma once
 
-#include <cstdint>
-#include <Windows.h>
-#include "./table_defs.h"
-
-#ifdef _WIN64
-#  define APICALL __fastcall
+#if defined(_WIN64) || defined(_WIN32)
+#  include <Windows.h>
+#  define APICALL             __fastcall
+#  define GetAddress          GetProcAddress
+#  define GetHandle( module ) GetModuleHandle( module )
 #else
-#  define APICALL __cdecl
+#  include <dlfcn.h>
+#  define APICALL
+#  define GetAddress          dlsym
+#  define GetHandle( module ) dlopen( (char *) module, RTLD_LAZY )
 #endif
+
+#include <cstdint>
+#include "./table_defs.h"
 
 #define DEF_API( name, ret_type, args )        \
   using name##_t = ret_type( APICALL * ) args; \
   inline name##_t name = nullptr;
 
 #define DEF_ADDR( name, il2cpp_export, handle ) \
-  name = reinterpret_cast<name##_t>( GetProcAddress( handle, il2cpp_export ) );
+  name = reinterpret_cast<name##_t>( GetAddress( handle, il2cpp_export ) );
 
 class Image;
 class Class;
@@ -123,7 +128,7 @@ namespace Il2cpp
     if ( initialized )
       return;
 
-    const auto GameAssemblyHandle = GetModuleHandle( L"GameAssembly.dll" );
+    const auto GameAssemblyHandle = GetHandle( L"GameAssembly.dll" );
 
     // debugger
     DEF_ADDR( is_debugger_attached, "il2cpp_is_debugger_attached", GameAssemblyHandle );
@@ -221,3 +226,5 @@ namespace Il2cpp
 #undef APICALL
 #undef DEF_API
 #undef DEF_ADDR
+#undef GetAddress
+#undef GetHandle

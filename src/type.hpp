@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Windows.h>
+#if defined( _WIN64 ) || defined( _WIN32 )
+#  include <Windows.h>
+#endif
+
 #include <stdio.h>
 #include <cstdint>
 #include <iostream>
