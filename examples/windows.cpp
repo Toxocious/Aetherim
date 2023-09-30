@@ -1,6 +1,8 @@
-#include <iostream>
+#if defined( _WIN64 ) || defined( _WIN32 )
 
-#include "src/wrapper.hpp"
+#  include <iostream>
+
+#  include "src/wrapper.hpp"
 
 DWORD WINAPI Init( HMODULE module )
 {
@@ -60,3 +62,5 @@ DWORD WINAPI DllMain( HINSTANCE module, DWORD reason, void * reserved )
 
   return TRUE;
 }
+
+#endif
