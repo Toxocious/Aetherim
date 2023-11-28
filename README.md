@@ -1,13 +1,14 @@
 <div align="center">
   <h1 align="center">Aetherim</h1>
 
-  **Aetherim** is the source-code of an internal, injectable DLL that is used to access Unity's IL2CPP methods during run-time. Aetherim should work in both 64-bit and 32-bit programs.
+  **Aetherim** is the source-code of a shared library that is used to access Unity's IL2CPP methods during run-time. Aetherim should work in both 64-bit and 32-bit programs, as well as on Linux, MacOS, and Windows.
 
   I created this in order to learn more about C++ as well as Unity and how its IL2CPP run-time works.
 
   <img src="https://img.shields.io/github/issues/Toxocious/Aetherim?style=for-the-badge&logo=appveyor" />
   <img src="https://img.shields.io/github/forks/Toxocious/Aetherim?style=for-the-badge&logo=appveyor" />
   <img src="https://img.shields.io/github/stars/Toxocious/Aetherim?style=for-the-badge&logo=appveyor" />
+  <br />
   <img src="https://img.shields.io/github/license/Toxocious/Aetherim?style=for-the-badge&logo=appveyor" />
   <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FToxocious%Aetherim">
     <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FToxocious%Aetherim&countColor=%2337d67a" />
@@ -26,12 +27,12 @@
 
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
-- [About The Project](#about-the-project)
-  - [Tech Stack](#tech-stack)
-  - [Dependencies](#dependencies)
 - [Getting Started](#getting-started)
-  - [Compiling As A DLL](#compiling-as-a-dll)
+  - [Compiling The Library](#compiling-the-library)
+    - [Linux and MacOS](#linux-and-macos)
+    - [Windows](#windows)
 - [Usage In Existing Project](#usage-in-existing-project)
+  - [Basic Wrapper Examples](#basic-wrapper-examples)
   - [Initialization](#initialization)
   - [Getting An Image/DLL](#getting-an-imagedll)
   - [Getting A Class](#getting-a-class)
@@ -49,28 +50,30 @@
 
 
 
-## About The Project
-### Tech Stack
-- C++
-- Premake
-
-### Dependencies
-No dependencies are required.
-
-
 ## Getting Started
-Premake is used to generate the files that are used to compile the code.
+Depending on the operating system that you're using, there's a handful of things to be aware of.
 
-I developed this on Windows and used Premake5 to generate VS2022 solution files to compile.
+Linux and MacOS users have the best ease-of-use and can just run the compile script.
 
-I do not guarantee that this will compile any other way.
+Windows users have a variety of options, all of which require additional tooling to compile the library.
 
-### Compiling As A DLL
-1. Install Premake
-2. Clone this repository
-3. Open the project directory in your terminal
-4. Run ``premake5 <TARGET>``
-5. Open the project file in the appropriate software and compile the .dll
+### Compiling The Library
+There is an included script ([./compile.sh](compile.sh)) that should be used to compile the library.
+
+#### Linux and MacOS
+You should be able to simply run the script and the library will be compiled.
+
+#### Windows
+A few different options are open for you.
+
+1. Install [Visual Studio](https://visualstudio.microsoft.com/) and compile through it.
+2. Install [Premake](https://premake.github.io/) and generate a project file, open the project file in the appropriate software, and compile that way.
+3. Install [MinGW](https://www.msys2.org/) and [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and run the [./compile.sh](compile.sh) script.
+
+> Options 1 and 2 have been tested and are confirmed to work; option 3 has not been tested, but should work.
+
+> If you haven't used Linux before or want the most user-friendly method of compilation, I recommend compiling through Visual Studio.
+
 
 
 ## Usage In Existing Project
@@ -95,6 +98,17 @@ If you would like to remove Aetherim from your project, run the following comman
 ```sh
 git rm <path-to-Aetherim>
 ```
+
+### Basic Wrapper Examples
+Included are some very basic examples of how to use this library, all of which can be found in the [./examples](examples/) directory.
+
+**Windows** [example file](examples/windows.cpp)
+
+**Linux** [example file](examples/mac_and_linux.cpp)
+
+**Mac** [example file](examples/mac_and_linux.cpp)
+
+
 
 ### Initialization
 Be sure to ``#include`` the ``Aetherim/src/wrapper.hpp`` file to your main entrypoint file so that you can access and initialize the IL2CPP wrapper.

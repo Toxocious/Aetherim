@@ -1,6 +1,9 @@
 #pragma once
 
-#include <Windows.h>
+#if defined( _WIN64 ) || defined( _WIN32 )
+#  include <Windows.h>
+#endif
+
 #include <stdio.h>
 #include <cstdint>
 #include <iostream>
@@ -70,7 +73,7 @@ public:
   auto get_param_name( int index ) const -> const char *
   {
     if ( Il2cpp::get_method_param_name == nullptr || this == nullptr )
-      return false;
+      return "Method->get_param_name() is nullptr";
 
     return Il2cpp::get_method_param_name( this, index );
   }
@@ -81,7 +84,7 @@ public:
   auto get_param_type( int index ) const -> const char *
   {
     if ( Il2cpp::get_method_param_type == nullptr || this == nullptr )
-      return false;
+      return "Method->get_param_type() is nullptr";
 
     return Il2cpp::get_method_param_type( this, index );
   }
