@@ -104,12 +104,10 @@ Included are some very basic examples of how to use this library, all of which c
 
 **Windows** [example file](examples/windows.cpp)
 
-**Linux** [example file](examples/linux.cpp)
+**Linux** [example file](examples/mac_and_linux.cpp)
 
-**Mac** [example file](examples/mac.cpp)
+**Mac** [example file](examples/mac_and_linux.cpp)
 
-
-> As of the most recent update, there is no usage example files for Linux or Mac.
 
 
 ### Initialization
