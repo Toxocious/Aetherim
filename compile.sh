@@ -17,7 +17,7 @@ esac
 mkdir -p "$output_dir"
 
 # Compile the shared library
-$compiler -shared -o "$output_dir/mylibrary.$output_ext" "$src_dir"/*.{hpp,h}
+$compiler -shared -o "$output_dir/aetherim.$output_ext" "$src_dir"/*.{hpp,h}
 
 # Check if compilation was successful
 if [ $? -eq 0 ]; then
