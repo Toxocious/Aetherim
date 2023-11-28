@@ -24,7 +24,7 @@ class Log
             std::tm * timeinfo = std::localtime( &now );
 
             char timestamp[20];
-            std::strftime( timestamp, sizeof( timestamp ), "%Y-%m-%d %H:%M:%S", timeinfo );
+            std::strftime( timestamp, sizeof( timestamp ), "%b. %d, %Y @ %I:%M %p", timeinfo );
 
             logFile << "[" << timestamp << "] " << message << std::endl;
             logFile.close();
