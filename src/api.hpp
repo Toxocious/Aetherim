@@ -15,6 +15,7 @@
 #include <cstdint>
 
 #include "./table_defs.h"
+#include "./log.hpp"
 
 #define DEF_API( name, ret_type, args )          \
     using name##_t = ret_type( APICALL * ) args; \
@@ -30,6 +31,7 @@ class Type;
 namespace Il2cpp
 {
     inline bool initialized { false };
+    Log logger( "path/to/logfile.log" );
 
     // debugger
     DEF_API( is_debugger_attached, bool, (void) );
