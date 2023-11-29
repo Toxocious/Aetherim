@@ -1,7 +1,7 @@
 #!/bin/bash
 
 src_dir="src"
-output_dir="output"
+output_dir="bin"
 
 compiler="g++"
 
