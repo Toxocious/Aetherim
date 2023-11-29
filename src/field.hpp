@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 #include "./api.hpp"
 
