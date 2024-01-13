@@ -6,6 +6,7 @@
 
 #include <stdio.h>
 #include <cstdint>
+#include <cstring>
 #include <iostream>
 #include <vector>
 
