@@ -41,6 +41,7 @@
   - [Getting A Static Field](#getting-a-static-field)
   - [Getting A Field's Attribute](#getting-a-fields-attribute)
   - [Getting A Method Pointer](#getting-a-method-pointer)
+  - [Creating Hooks For Methods](#creating-hooks-for-methods)
   - [Invoking A Static Method](#invoking-a-static-method)
   - [Invoking A Non-Static Method](#invoking-a-non-static-method)
   - [Check If A Debugger Is Attached To The Thread](#check-if-a-debugger-is-attached-to-the-thread)
@@ -235,6 +236,21 @@ const auto player_position = player_handler->get_method( "get_position" );
 ```
 
 If found, a pointer is returned, otherwise `nullptr` is returned.
+
+### Creating Hooks For Methods
+Once you've gotten a method pointer, you may want to hook it and perform your own logic when the method runs internally.
+
+In this example, we'll use [MinHook](https://github.com/TsudaKageyu/minhook) to hook a method.
+
+```cpp
+#define UFUNC(methodPointer) *(void**)methodPointer
+
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+const auto player_move = player_handler->get_method( "Move" );
+
+MH_CreateHook(UFUNC(player_move), &playerMove_h, (void**)&playerMove_o);
+```
 
 ### Invoking A Static Method
 Invoking a static method is easy. You only need a valid method pointer &mdash; no instance or object pointer is required.
