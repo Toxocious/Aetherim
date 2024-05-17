@@ -36,6 +36,7 @@
   - [Initialization](#initialization)
   - [Getting An Image/DLL](#getting-an-imagedll)
   - [Getting A Class](#getting-a-class)
+  - [Getting A Nested Class](#getting-a-nested-class)
   - [Getting All Fields Of A Class](#getting-all-fields-of-a-class)
   - [Getting A Static Field](#getting-a-static-field)
   - [Getting A Field's Attribute](#getting-a-fields-attribute)
@@ -149,6 +150,25 @@ const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
 If found, a pointer is returned, otherwise `nullptr` is returned.
 
 From here, PlayerHandler can provide you with various helper methods that allow you to get field and method pointers for fields and methods of the PlayerHandler class, as well as a helper method to invoke methods of the class.
+
+### Getting A Nested Class
+Often times classes will contain subclasses - we can use Aetherim to get the subclass of any class easily.
+
+In this example, we'll get the Inventory subclass of the PlayerHandler.
+
+```cpp
+const auto Asm_CSharp = Wrapper->get_image( "Assembly-CSharp.dll" );
+const auto player_handler = Asm_CSharp->get_class( "PlayerHandler" );
+if ( player_handler != nullptr )
+{
+  const auto player_handler_sub_class = Asm_CSharp->get_class("Inventory");
+}
+```
+
+If found, a pointer is returned, otherwise `nullptr` is returned.
+
+Just like with non-nested classes, you are still able to get all of the fields - static and otherwise - from nested classes.
+
 
 ### Getting All Fields Of A Class
 Aetherim provides an easy way to get every field that a class has.
