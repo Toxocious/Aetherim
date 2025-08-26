@@ -28,9 +28,6 @@
 ## Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
-  - [Compiling The Library](#compiling-the-library)
-    - [Linux and MacOS](#linux-and-macos)
-    - [Windows](#windows)
 - [Usage In Existing Project](#usage-in-existing-project)
   - [Basic Wrapper Examples](#basic-wrapper-examples)
   - [Initialization](#initialization)
@@ -53,33 +50,14 @@
 
 
 ## Getting Started
-Depending on the operating system that you're using, there's a handful of things to be aware of.
+Aetherim is a header-include library does not require you to compile it separately.
 
-Linux and MacOS users have the best ease-of-use and can just run the compile script.
-
-Windows users have a variety of options, all of which require additional tooling to compile the library.
-
-### Compiling The Library
-There is an included script ([./compile.sh](compile.sh)) that should be used to compile the library.
-
-#### Linux and MacOS
-You should be able to simply run the script and the library will be compiled.
-
-#### Windows
-A few different options are open for you.
-
-1. Install [Visual Studio](https://visualstudio.microsoft.com/) and compile through it.
-2. Install [Premake](https://premake.github.io/) and generate a project file, open the project file in the appropriate software, and compile that way.
-3. Install [MinGW](https://www.msys2.org/) and [WSL](https://learn.microsoft.com/en-us/windows/wsl/install) and run the [./compile.sh](compile.sh) script.
-
-> Options 1 and 2 have been tested and are confirmed to work; option 3 has not been tested, but should work.
-
-> If you haven't used Linux before or want the most user-friendly method of compilation, I recommend compiling through Visual Studio.
+Simply download the repository, add it to your project, and include the source files.
 
 
 
 ## Usage In Existing Project
-Add the repository into your project (typically in a `/submodules` folder or something).
+Add the repository into your project.
 
 > Consider adding this repository as a git submodule, so that you can update your project easily when Aetherim updates.
 
@@ -100,6 +78,8 @@ If you would like to remove Aetherim from your project, run the following comman
 ```sh
 git rm <path-to-Aetherim>
 ```
+
+
 
 ### Basic Wrapper Examples
 Included are some very basic examples of how to use this library, all of which can be found in the [./examples](examples/) directory.
